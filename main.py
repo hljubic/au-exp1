@@ -1,16 +1,24 @@
-# This is a sample Python script.
+from flask import Flask
+import joblib
+import keras
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+app = Flask(__name__)
 
+le_gender = joblib.load("artifacts/le_gender.pkl")
+le_race = joblib.load("artifacts/le_race.pkl")
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+scaler_X = joblib.load("artifacts/std_scaler_X.pkl")
+scaler_y = joblib.load("artifacts/std_scaler_y.pkl")
 
+advanced_model = keras.models.load_model("artifacts/advanced_model.keras")
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+@app.route("/")
+def home():
+    return "Dobar dan!"
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+@app.route("/load_model")
+def load_model():
+    return "aa"
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5005, debug=True)
