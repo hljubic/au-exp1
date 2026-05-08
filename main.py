@@ -136,6 +136,29 @@ def home():
     return "Dobar dan!"
 
 
+@app.route("/api/test")
+def test():
+    return jsonify({
+        "status": "OK!"
+    })
+
+@app.route("/api/basic_info")
+def basic_info():
+    data = pd.read_csv("data/students.csv")
+
+    return jsonify({
+        "shape": data.shape,
+        "columns": data.columns.tolist()
+    })
+
+@app.route("/api/writing_score_mean")
+def writing_score_mean():
+    data = pd.read_csv("data/students.csv")
+
+    return jsonify({
+        "writing score": data['writing score'].mean()
+    })
+
 @app.route("/api/overview")
 def overview():
     return jsonify({
